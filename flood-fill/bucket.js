@@ -32,11 +32,12 @@ var bucket = function(a,b) {
     var arr = [[a,b]];
 
     while( arr.length ) {
-        var coord = arr.shift(); // breadth
-        // var coord = arr.pop(); // depth
-        var x = parseInt(coord[0]), y = parseInt(coord[1]);
+        var choices = []; 
 
-        if( !grid[x] || grid[x][y] !== target ) {
+        //var coord = arr.shift(); // breadth
+         var coord = arr.pop(); // depth
+        var x = parseInt(coord[0]), y = parseInt(coord[1]);
+        if(!grid[x] || grid[x][y] !== target || neighborsVisited(x,y)) {
             continue;
         }
 
@@ -53,13 +54,46 @@ var bucket = function(a,b) {
                 }
             }, speed);
         }
+        
+        choices.push([x-1, y]);
+        choices.push([x, y+1]);
+        choices.push([x+1, y]);
+        choices.push([x, y-1]);
 
-        arr.push([x-1, y]);
-        arr.push([x, y+1]);
-        arr.push([x+1, y]);
-        arr.push([x, y-1]);
+        //splice at random index, then pop/push all remaining
+        while (choices.length > 0) {
+            var c = choices.splice(getRandomInt(0,choices.length), 1)[0]
+            arr.push(c);
+        }
     }
 };
+
+function neighborsVisited(x,y) {
+    var count = 0
+    var choices = []
+    choices.push([x-1, y]);
+    choices.push([x, y+1]);
+    choices.push([x+1, y]);
+    choices.push([x, y-1]);
+    var choice
+    while (choices.length > 0) {
+        choice = choices.pop()
+            console.log(x,y,choice)
+        if (grid[choice[0]] !== undefined && grid[choice[0]][choice[1]] !== undefined && grid[choice[0]][choice[1]] == replacement) {
+            count++
+        } 
+    }
+    if (count == 1 || count == 0) {
+        return false
+    } 
+    return true
+}
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min;
+}
 
 var updateHtmlGrid = function(arr) {
     var x = arr[0], y = arr[1];
@@ -80,11 +114,11 @@ $('#randomGrid').on('click', function() {
 
         for( var j = 0; j < w; j++ ) {
             var rand = Math.floor(Math.random() * 10);
-            if( rand < 6 ) {
+//            if( rand < 6 ) {
                 grid[i][j] = target
-            } else {
-                grid[i][j] = wall;
-            }
+//            } else {
+//                grid[i][j] = wall;
+//            }
         }
     }
 
