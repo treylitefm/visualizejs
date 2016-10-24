@@ -1,0 +1,23 @@
+.block {
+    width: 50px;
+    height: 50px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    float: left;
+}
+
+[data-color="red"] {
+    background-color: red;
+}
+
+[data-color="blue"] {
+    background-color: blue;
+}
+
+[data-color="green"] {
+    background-color: green;
+}
+
+.row {
+    clear: left;
+}
