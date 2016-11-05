@@ -15,11 +15,12 @@ for (var i = 0; i < w; i++) {
 }
 
 grid[1][1] = 1
-grid[0][1] = 1
 grid[1][0] = 1
 grid[2][1] = 1
 grid[0][3] = 1
 
+console.log(g.consumeGrid(grid, [1]))
+/*
 for (var i = 0; i < w; i++) {
     for (var j = 0; j < l; j++) {
         arr.push(grid[i][j])
@@ -63,15 +64,15 @@ for (var i = 0; i < total; i++) {
 }
 
 
-/*
 //console.log(g.BFS(0,10))
 var path = g.Dijkstra(0,10)
 /*for (i in path) {
     console.log(path[i].id,path[i].cost)
 }*/
-
+/*
 var path = g.Astar(10, 0, true, l, w)
 for (i in path) {
     console.log(path[i].id,path[i].heuristic,path[i].cost)
 }
+*/
 //console.log(g.vertices,g.edges)

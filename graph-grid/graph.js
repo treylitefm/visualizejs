@@ -50,6 +50,66 @@
             };
         }
 
+        consumeGrid(grid, borders) { //borders specifies the border tiles; when generating connections, a node does not have a connection to a border. however, border nodes still exist to maintain consistent grid-like structure
+            var addUp = function(i) {
+                var conn = i-length
+                if (conn >= 0 && !isBorder(arr[i]) && !isBorder(arr[conn])) {
+                    this.connect(i, conn, 1)
+                }
+            }.bind(this)
+
+            var addRight = function(i) {
+                var conn = i+1
+                if ((i+1)%length !== 0 && !isBorder(arr[i]) && !isBorder(arr[conn])) {
+                    this.connect(i, conn, 1)
+                }
+            }.bind(this)
+
+            var addDown = function(i) {
+                var conn = i+length
+                if (conn < total && !isBorder(arr[i]) && !isBorder(arr[conn])) {
+                    this.connect(i, conn, 1)
+                }
+            }.bind(this)
+
+            var addLeft = function(i) {
+                var conn = i-1
+                if (i%length !== 0 && !isBorder(arr[i]) && !isBorder(arr[conn])) {
+                    this.connect(i, conn, 1)
+                }
+            }.bind(this)
+
+            function isBorder(current) {
+                for (var i = 0; i < borders.length; i++) {
+                    if (current == borders[i]) {
+                        return true
+                    }
+                }
+                return false
+            }
+
+            var length = grid[0].length
+            var width = grid.length
+            var total = length*width
+            var arr = []
+
+            for (var i = 0; i < grid.length; i++) {
+                for (var j = 0; j < grid[0].length; j++) {
+                    arr.push(grid[i][j])
+                    this.add()
+                }
+            }
+
+            for (var i = 0; i < total; i++) {
+                addUp(i)
+                addRight(i)
+                addDown(i)
+                addLeft(i)
+            }
+
+            return this
+        }
+
         getVertices() {
             console.log(this.vertices);
         }
